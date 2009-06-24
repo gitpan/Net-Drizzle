@@ -254,7 +254,7 @@ our @EXPORT_OK = @$constants;
 
 our @ISA;
 BEGIN {
-    our $VERSION = '0.01';
+    our $VERSION = '0.02';
 
     eval {
         require XSLoader;
@@ -312,6 +312,9 @@ libdrizzle can connect to mysql server and drizzle server.
 You can use libdrizzle as better version of libmysqlclient.
 
 libdrizzle's great features are listed below.
+
+B<THIS MODULE IS IN ITS BETA QUALITY. THE API IS STOLEN FROM SCRAPI BUT MAY CHAN
+GE IN THE FUTURE>
 
 =over 4
 

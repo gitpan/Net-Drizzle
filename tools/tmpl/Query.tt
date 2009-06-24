@@ -17,22 +17,11 @@ Net::Drizzle::Query - Query object for Net::Drizzle
 =head1 METHODS
 
 =over 4
+[% FOR meth IN methods %]
+=item [% meth.name %]
 
-=item con
-
-Get a connection for a query.
-     
-
-=item string
-
-Get the string for a query.
-     
-
-=item result
-
-Get the result for a query.
-     
-
+[% meth.doc %]
+[% END %]
 
 =back
 
