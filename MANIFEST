@@ -1,5 +1,10 @@
 benchmark/simple.pl
 Changes
+Column.xs
+Column.xs.mt
+Connection.xs
+Connection.xs.tt
+Const.xs
 Drizzle.xs
 Drizzle.xs.tt
 examples/danga-socket.pl
@@ -11,6 +16,7 @@ inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
+inc/Module/Install/Compiler.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
@@ -27,15 +33,17 @@ inc/Test/Builder/Module.pm
 inc/Test/More.pm
 inc/Text/MicroTemplate.pm
 lib/Net/Drizzle.pm
-lib/Net/Drizzle/Column.pm
 lib/Net/Drizzle/Connection.pm
-lib/Net/Drizzle/Query.pm
 lib/Net/Drizzle/Result.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
+net_drizzle.h
 ppport.h
+Query.xs
 README
+Result.xs
+Result.xs.mt
 t/00_compile.t
 t/01_new.t
 t/02_prefs.t
@@ -47,9 +55,6 @@ t/07_con_data.t
 t/08_protocol_version.t
 t/900_regression/01_foo.t
 tools/get_constants.pl
-tools/make-doc.pl
-tools/tmpl/Column.tt
-tools/tmpl/Query.tt
 typemap
 xt/01_live/01_simple_multi.t
 xt/01_live/02_simple.t
