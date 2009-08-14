@@ -9,10 +9,11 @@ require Exporter;
 use strict;
 use warnings;
 use constant DEBUG => $ENV{MICRO_TEMPLATE_DEBUG} || 0;
+use 5.00800;
 
 use Carp 'croak';
 
-our $VERSION = '0.05';
+our $VERSION = '0.07';
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(encoded_string build_mt render_mt);
 our %EXPORT_TAGS = (
@@ -25,7 +26,6 @@ sub new {
         code                => undef,
         comment_mark        => '#',
         expression_mark     => '=',
-        raw_expression_mark => '=r',
         line_start          => '?',
         template            => undef,
         tree                => [],
@@ -122,12 +122,6 @@ sub _build {
             if ($type eq 'expr') {
                 $lines[-1] .= "\$_MT_T = scalar $value; \$_MT .= ref \$_MT_T eq 'Text::MicroTemplate::EncodedString' ? \$\$_MT_T : $escape_func(\$_MT_T);";
             }
-
-            # Raw Expression
-            if ($type eq 'raw_expr') {
-                
-                $lines[-1] .= "\$_MT_T = $value; \$_MT .= ref \$_MT_T eq q(Text::MicroTemplate::EncodedString) ? \$\$_MT_T : \$_MT_T;";
-            }
         }
     }
 
@@ -160,7 +154,6 @@ sub parse {
     my $tag_end       = quotemeta $self->{tag_end};
     my $cmnt_mark     = quotemeta $self->{comment_mark};
     my $expr_mark     = quotemeta $self->{expression_mark};
-    my $raw_expr_mark = quotemeta $self->{raw_expression_mark};
 
     # Tokenize
     my $state = 'text';
@@ -185,16 +178,6 @@ sub parse {
         if ($line =~ /^$line_start$expr_mark\s+(.+)$/) {
             push @{$self->{tree}}, [
                 'expr', $1,
-                $newline ? ('text', "\n") : (),
-            ];
-            $multiline_expression = 0;
-            next;
-        }
-
-        # Perl line with raw return value
-        if ($line =~ /^$line_start$raw_expr_mark\s+(.+)$/) {
-            push @{$self->{tree}}, [
-                'raw_expr', $1,
                 $newline ? ('text', "\n") : (),
             ];
             $multiline_expression = 0;
@@ -231,8 +214,6 @@ sub parse {
         my @token;
         for my $token (split /
             (
-                $tag_start$raw_expr_mark # Raw Expression
-            |
                 $tag_start$expr_mark     # Expression
             |
                 $tag_start$cmnt_mark     # Comment
@@ -258,11 +239,6 @@ sub parse {
             # Comment
             elsif ($token =~ /^$tag_start$cmnt_mark$/) { $state = 'cmnt' }
 
-            # Raw Expression
-            elsif ($token =~ /^$tag_start$raw_expr_mark$/) {
-                $state = 'raw_expr';
-            }
-
             # Expression
             elsif ($token =~ /^$tag_start$expr_mark$/) {
                 $state = 'expr';
@@ -278,7 +254,7 @@ sub parse {
                 # only the first line can be compiled as 'expr'
                 $state = 'code' if $multiline_expression;
                 $multiline_expression = 1
-                    if $state eq 'expr' || $state eq 'raw_expr';
+                    if $state eq 'expr';
 
                 # Store value
                 push @token, $state, $token;
@@ -418,6 +394,8 @@ package Text::MicroTemplate::EncodedString;
 use strict;
 use warnings;
 
+use overload q{""} => sub { shift->as_string }, fallback => 1;
+
 sub new {
     my ($klass, $str) = @_;
     bless \$str, $klass;
@@ -431,4 +409,4 @@ sub as_string {
 1;
 __END__
 
-#line 596
+#line 570

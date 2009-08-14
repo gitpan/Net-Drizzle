@@ -7,6 +7,7 @@ Connection.xs.tt
 Const.xs
 Drizzle.xs
 Drizzle.xs.tt
+examples/coro.pl
 examples/danga-socket.pl
 examples/poe.pl
 examples/server.pl
@@ -22,6 +23,7 @@ inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
 inc/Module/Install/MicroTemplate.pm
+inc/Module/Install/Repository.pm
 inc/Module/Install/TestBase.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
