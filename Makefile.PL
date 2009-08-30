@@ -5,6 +5,8 @@ no_index 'tools/extlib/';
 
 can_cc or die "This module requires a C compiler";
 
+cc_warnings;
+
 makemaker_args(
     OBJECT  => '$(O_FILES)',
     LIBS    => '-ldrizzle',
@@ -20,7 +22,7 @@ makemaker_args(
     },
 );
 
-cc_files map { "$_\.c" } qw/Connection Drizzle Result Column Query Const/;
+cc_files map { "$_\.c" } qw/Connection Drizzle Result Column Query/;
 tests 't/*.t';
 recursive_author_tests('xt');
 render_mt('Drizzle.xs.tt' => 'Drizzle.xs');

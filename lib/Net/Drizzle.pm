@@ -254,7 +254,7 @@ our @EXPORT_OK = @$constants;
 
 our @ISA;
 BEGIN {
-    our $VERSION = '0.06';
+    our $VERSION = '0.07';
 
     eval {
         require XSLoader;
@@ -406,6 +406,8 @@ Tokuhiro Matsuno E<lt>tokuhirom @*(#RJKLFHFSDLJF gmail.comE<gt>
 =head1 THANKS TO
 
 kazuhooku(many advice and suggested to write this module)
+
+gfx++(xs)
 
 =head1 SEE ALSO
 

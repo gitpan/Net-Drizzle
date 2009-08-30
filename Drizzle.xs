@@ -2,7 +2,7 @@
     vim: ft=xs
 */
 #include "net_drizzle.h"
-
+#include "const.h"
 
 inline
 SV *_bless(const char *class, void *obj) {
@@ -95,17 +95,25 @@ SV* row2arrayref(drizzle_row_t row, uint16_t cnt) {
     return newRV_noinc((SV*)res);
 }
 
+/* prototype for sub xs modules */
+XS(boot_Net__Drizzle__Connection);
+XS(boot_Net__Drizzle__Result);
+XS(boot_Net__Drizzle__Column);
+XS(boot_Net__Drizzle__Query);
+
+#define call_sub_xs(name)         PUSHMARK(mark); boot_Net__Drizzle__##name(aTHX_ cv)
+
 MODULE = Net::Drizzle  PACKAGE = Net::Drizzle
 
 PROTOTYPES: DISABLE
 
 BOOT:
     /* call other *.xs modules */
-    boot_Net__Drizzle__Connection(aTHX_ cv);
-    boot_Net__Drizzle__Result(aTHX_ cv);
-    boot_Net__Drizzle__Column(aTHX_ cv);
-    boot_Net__Drizzle__Query(aTHX_ cv);
-    boot_Net__Drizzle__Const(aTHX_ cv);
+    call_sub_xs(Connection);
+    call_sub_xs(Result);
+    call_sub_xs(Column);
+    call_sub_xs(Query);
+    setup_constants();
 
 SV*
 Net::Drizzle::new()
@@ -144,10 +152,12 @@ void
 DESTROY(SV* _self)
 CODE:
     LOG("DESTROY drizzle 0x%X, drizzle->refcnt=%d\n", (unsigned int)_self, (int)SvREFCNT(_self));
-    drizzle_st *drizzle = GET_DRIZZLE(_self);
+    net_drizzle * n_dr = XS_STATE(net_drizzle*, _self);
+    drizzle_st *drizzle = n_dr->drizzle;
     drizzle_free(drizzle);
     av_undef(GET_DRIZZLE_QUERIES(_self));
     Safefree(drizzle);
+    Safefree(n_dr);
 
 void
 query_run_all(SV *self)

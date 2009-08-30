@@ -45,6 +45,13 @@ typedef struct net_col {
     drizzle_column_st *col;
 } net_col;
 
+SV* _create_drizzle();
+SV * _create_result(SV* con_sv, SV *query_sv, drizzle_result_st* result_raw);
+net_col * _create_col(SV* result_sv, drizzle_column_st* col_raw);
+SV * _create_con(SV* drizzle_sv, drizzle_con_st *con_raw);
+SV * _create_query(SV* drizzle_sv, SV *con_sv, drizzle_query_st *query_raw);
+SV* row2arrayref(drizzle_row_t row, uint16_t cnt);
+
 #if 0
 #define LOG(...) PerlIO_printf(PerlIO_stderr(), __VA_ARGS__)
 #else

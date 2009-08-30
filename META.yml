@@ -3,9 +3,12 @@ abstract: 'perl bindings for libdrizzle'
 author:
   - 'Tokuhiro Matsuno <tokuhirom @*(#RJKLFHFSDLJF gmail.com>'
 build_requires:
+  Devel::PPPort: 3.19
   ExtUtils::MakeMaker: 6.42
+  ExtUtils::ParseXS: 2.2
   Test::More: 0
   Text::MicroTemplate: 0.05
+  XSLoader: 0.08
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -28,4 +31,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/tokuhirom/p5-net-drizzle.git
-version: 0.06
+version: 0.07

@@ -4,7 +4,7 @@ Column.xs
 Column.xs.mt
 Connection.xs
 Connection.xs.tt
-Const.xs
+const.h
 Drizzle.xs
 Drizzle.xs.tt
 examples/coro.pl
@@ -13,11 +13,14 @@ examples/poe.pl
 examples/server.pl
 examples/simple.pl
 examples/simple_multi.pl
+inc/Devel/PPPort.pm
+inc/ExtUtils/ParseXS.pm
 inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
 inc/Module/Install/Compiler.pm
+inc/Module/Install/External.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
@@ -27,6 +30,7 @@ inc/Module/Install/Repository.pm
 inc/Module/Install/TestBase.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
+inc/Module/Install/XSUtil.pm
 inc/Spiffy.pm
 inc/Test/Base.pm
 inc/Test/Base/Filter.pm
@@ -34,6 +38,7 @@ inc/Test/Builder.pm
 inc/Test/Builder/Module.pm
 inc/Test/More.pm
 inc/Text/MicroTemplate.pm
+inc/XSLoader.pm
 lib/Net/Drizzle.pm
 lib/Net/Drizzle/Connection.pm
 lib/Net/Drizzle/Result.pm
